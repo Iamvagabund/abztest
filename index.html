@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>TESTTASK</title>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ====== -->
+  <header class="header">
+    <div class="container">
+      <div class="header__logo">
+        <img src="img/logo.png" alt="TESTTASK">
+      </div>
+      <div class="header__buttons">
+        <button class="btn">Users</button>
+        <button class="btn">Sign up</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ====== -->
+  <main>
+    <!-- ===== HERO SECTION ====== -->
+    <section class="hero">
+      <div class="hero__content">
+        <h1>Test assignment for front-end developer</h1>
+        <p>
+          What defines a good front-end developer is one that has skilled knowledge of HTML, CSS, JS with a vast
+          understanding of User design
+          thinking as they'll be building web interfaces with accessibility in mind. They should also be excited to
+          learn, as the world of
+          Front-End Development keeps evolving.
+        </p>
+        <button class="btn">Sign up</button>
+      </div>
+    </section>
+
+    <!-- ===== GET SECTION ====== -->
+    <section class="get">
+      <h1>Working with GET request</h1>
+      <div class="container">
+        <!-- ===== START CARDS ====== -->
+        <div class="cards">
+        </div>
+        <button class="btn show-more btn-more">Show more</button>
+      </div>
+    </section>
+
+
+    <!-- ===== POST SECTION ====== -->
+    <section class="post">
+      <h1>Working with POST request</h1>
+      <form action="#" class="form">
+        <div class="container">
+          <div class="input__container message-error">
+            <input class="form__input error-border" required name="name" type="text">
+            <label for="">Your name</label>
+            <span>Your name</span>
+          </div>
+
+          <div class="input__container">
+            <input class="form__input" required name="email" type="email">
+            <label for="">Email</label>
+            <span>Email</span>
+          </div>
+
+          <div class="input__container input-help">
+            <input class="form__input input__phone" required name="phone" type="phone">
+            <label for="">Phone</label>
+            <span>Phone</span>
+          </div>
+
+
+          <!-- ===== RADIO BUTTONS ====== -->
+          <div class="form__radio">
+            <p>Select your position</p>
+            <!-- <div class="form__radio-block">
+              <input id="radio-front" type="radio" name="position_id" value="1" checked>
+              <label for="radio-front">Frontend developer</label>
+            </div>
+            <div class="form__radio-block">
+              <input id="radio-back" type="radio" name="position_id" value="2">
+              <label for="radio-back">Backend developer</label>
+            </div>
+            <div class="form__radio-block">
+              <input id="radio-des" type="radio" name="position_id" value="3">
+              <label for="radio-des">Designer</label>
+            </div>
+            <div class="form__radio-block">
+              <input id="radio-qa" type="radio" name="position_id" value="4">
+              <label for="radio-qa">QA</label>
+            </div> -->
+          </div>
+
+          <!-- ===== UPLOAD BUTTON====== -->
+          <label class="form__upload">
+            <span class="form__upload-btn">Upload</span>
+            <span id="upload-text" class="form__upload-text" type="text">Upload your photo</span>
+            <input id="input-file" type="file" name="photo">
+          </label>
+          <button class="btn btn-form" type="submit">Sign me</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
