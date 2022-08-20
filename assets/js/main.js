@@ -183,7 +183,7 @@ form.addEventListener('submit', (event) => {
 function validateName() {
   const name = document.getElementById('name');
 
-  if(name.value.length > 2) {
+  if(name.value.length < 2 && name.value.length > 60) {
     const errorName = document.createElement('div');
 
     name.classList.add('error-border');
@@ -193,6 +193,7 @@ function validateName() {
     name.parentNode.append(errorName);
   }
 }
+
 
 
 
