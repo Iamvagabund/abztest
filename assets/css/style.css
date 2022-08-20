@@ -413,19 +413,14 @@ main {
 }
 
 .error-color {
+  padding-left: 16px;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: left;
   color: var(--error-color);
 }
 
-/* .input__container.focus label {
-  color: var(--error-color)
-}  */
-
-/* 
-
-.message-error {
-  position: relative;
-}
-*/
 
 /*=============== @MEDIA BLOCK ===============*/
 @media (max-width: 1170px) {

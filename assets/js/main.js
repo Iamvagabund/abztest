@@ -124,14 +124,14 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
 
 
 /*=============== ERROR BLOCK FORM ===============*/
-const validateEmail = (email) => {
+// const validateEmail = (email) => {
 
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
-    );
-};
+//   return String(email)
+//     .toLowerCase()
+//     .match(
+//       /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
+//     );
+// };
 
 /*=============== END ERROR BLOCK FORM ===============*/
 
@@ -169,42 +169,68 @@ form.addEventListener('submit', (event) => {
       showMore.removeAttribute('disabled');
     } else {
       validateName();
-      validateName();
+      validateEmail(data);
+      validatePhone(data);
       console.log(data);
     }
   }).catch(() => {
 
   }).finally(() => {
-    form.reset();
   });
 });
 
 
+/*=============== Validate name ===============*/
 function validateName() {
   const name = document.getElementById('name');
-
   if(name.value.length < 2 && name.value.length > 60) {
     const errorName = document.createElement('div');
 
     name.classList.add('error-border');
-    errorName.classList.add('help-text', 'error-color');
+    errorName.classList.add('error-color');
     name.nextElementSibling.style.color = "var(--error-color)";
-    errorName.innerHTML = 'Username should contain 2-60 characters';
+    errorName.innerHTML = 'Username should contain 2-60 characters.';
     name.parentNode.append(errorName);
   }
 }
 
 
 
-
+/*=============== Validate email ===============*/
 const EMAIL_REGEXP = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+function validateEmail(data) {
+  const email = document.getElementById('email');
+  if (!isEmailValid(email.value)) {
+    const errorName = document.createElement('div');
 
-function validateEmail() {
-  if (isEmailValid(input.value)) {
-    input.style.borderColor = 'green';
+    email.classList.add('error-border');
+    errorName.classList.add('error-color');
+    email.nextElementSibling.style.color = "var(--error-color)";
+    errorName.innerHTML = `${data.fails.email}`;
+    email.parentNode.append(errorName);
   }
 }
 
 function isEmailValid(value) {
   return EMAIL_REGEXP.test(value);
+}
+
+/*=============== Validate phone ===============*/
+const PHONE_REGEXP = /^[\+]{0,1}380([0-9]{9})$/;
+
+function validatePhone(data) {
+  const phone = document.getElementById('phone');
+  if (!isPhoneValid(phone.value)) {
+    const errorName = document.createElement('div');
+
+    phone.classList.add('error-border');
+    errorName.classList.add('error-color');
+    phone.nextElementSibling.style.color = "var(--error-color)";
+    errorName.innerHTML = `${data.fails.phone}`;
+    phone.parentNode.append(errorName);
+  }
+}
+
+function isPhoneValid(value) {
+  return PHONE_REGEXP.test(value);
 }
