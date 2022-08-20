@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <title>TESTTASK</title>
 </head>
 
@@ -15,7 +15,7 @@
   <header class="header">
     <div class="container">
       <div class="header__logo">
-        <img src="img/logo.png" alt="TESTTASK">
+        <img src="assets/img/logo.svg" alt="TESTTASK">
       </div>
       <div class="header__buttons">
         <button class="btn">Users</button>
@@ -45,7 +45,6 @@
     <section class="get">
       <h1>Working with GET request</h1>
       <div class="container">
-        <!-- ===== START CARDS ====== -->
         <div class="cards">
         </div>
         <button class="btn show-more btn-more">Show more</button>
@@ -56,46 +55,31 @@
     <!-- ===== POST SECTION ====== -->
     <section class="post">
       <h1>Working with POST request</h1>
-      <form action="#" class="form">
+      <form class="form">
         <div class="container">
           <div class="input__container message-error">
-            <input class="form__input error-border" required name="name" type="text">
-            <label for="">Your name</label>
+            <input id="name" class="form__input" required name="name" type="text">
+            <label for="name">Your name</label>
             <span>Your name</span>
           </div>
 
           <div class="input__container">
-            <input class="form__input" required name="email" type="email">
+            <input id="email" class="form__input" required name="email" type="email">
             <label for="">Email</label>
             <span>Email</span>
           </div>
 
-          <div class="input__container input-help">
+          <div class="input__container">
             <input class="form__input input__phone" required name="phone" type="phone">
             <label for="">Phone</label>
             <span>Phone</span>
+            <div class="help-text">+38 (XXX) XXX - XX - XX</div>
           </div>
 
 
           <!-- ===== RADIO BUTTONS ====== -->
           <div class="form__radio">
             <p>Select your position</p>
-            <!-- <div class="form__radio-block">
-              <input id="radio-front" type="radio" name="position_id" value="1" checked>
-              <label for="radio-front">Frontend developer</label>
-            </div>
-            <div class="form__radio-block">
-              <input id="radio-back" type="radio" name="position_id" value="2">
-              <label for="radio-back">Backend developer</label>
-            </div>
-            <div class="form__radio-block">
-              <input id="radio-des" type="radio" name="position_id" value="3">
-              <label for="radio-des">Designer</label>
-            </div>
-            <div class="form__radio-block">
-              <input id="radio-qa" type="radio" name="position_id" value="4">
-              <label for="radio-qa">QA</label>
-            </div> -->
           </div>
 
           <!-- ===== UPLOAD BUTTON====== -->
@@ -109,7 +93,7 @@
       </form>
     </section>
   </main>
-  <script src="js/main.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 
 </html>
