@@ -19,14 +19,6 @@ inputs.forEach(input => {
 })
 
 
-/*=============== INPUT UPLOAD ===============*/
-const inputUpload = document.getElementById('input-file');
-inputUpload.addEventListener('change', function() {
-  let file = this.files[0].name;
-  document.getElementById('upload-text').textContent = `${file}`;
-});
-
-
 /*=============== GET BLOCK ===============*/
 let userPage = 1;
 const userCount = 6;
@@ -104,23 +96,23 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
 
 
 /*=============== POSITION BLOCK ===============*/
-  fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
-    .then(response => { return response.json(); })
-    .then(data => {
-      if(data.success) {
-        data.positions.forEach(({name, id}) => {
-          const element = document.createElement('div');
-          element.classList.add('form__radio-block');
+fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
+  .then(response => { return response.json(); })
+  .then(data => {
+    if(data.success) {
+      data.positions.forEach(({name, id}) => {
+        const element = document.createElement('div');
+        element.classList.add('form__radio-block');
 
-          element.innerHTML = `
-              <input class="_req" id="radio-front" type="radio" name="position_id" value="${id}">
-              <label for="radio-front">${name}</label>
-          `;
-  
-          document.querySelector('.form__radio').append(element);
-        });
-      }
-    });
+        element.innerHTML = `
+            <input class="_req" id="radio-front" type="radio" name="position_id" value="${id}">
+            <label for="radio-front">${name}</label>
+        `;
+
+        document.querySelector('.form__radio').append(element);
+      });
+    }
+  });
 
 
 /*=============== ERROR BLOCK FORM ===============*/
@@ -133,14 +125,27 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
 //     );
 // };
 
-/*=============== END ERROR BLOCK FORM ===============*/
 
-
+/*=============== DISABLED/ENABLE BUTTON FORM ===============*/
+inputs.forEach(input => {
+  input.oninput = () => {
+    const nameValue = document.getElementById('name').value;
+    const emailValue = document.getElementById('email').value;
+    const phoneValue = document.getElementById('phone').value;
+    const btnForm = document.querySelector('.btn-form');
+    if (nameValue.length < 2 || emailValue.length < 5 || phoneValue.length < 5) {
+      btnForm.setAttribute('disabled', true);
+      btnForm.classList.add('disabled');
+    } else {
+      btnForm.removeAttribute('disabled');
+      btnForm.classList.remove('disabled');
+    }
+  };
+});
 
 
 /*=============== POST BLOCK ===============*/
 const form = document.querySelector('.form');
-
 
 const postData = async (url, data) => {
   const response = await fetch(url, {
@@ -157,7 +162,6 @@ const postData = async (url, data) => {
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
-
   const formData = new FormData(form);
 
   postData('https://frontend-test-assignment-api.abz.agency/api/v1/users', formData)
@@ -171,7 +175,7 @@ form.addEventListener('submit', (event) => {
       validateName();
       validateEmail(data);
       validatePhone(data);
-      console.log(data);
+      validatePhoto(data);
     }
   }).catch(() => {
 
@@ -195,7 +199,6 @@ function validateName() {
 }
 
 
-
 /*=============== Validate email ===============*/
 const EMAIL_REGEXP = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
 function validateEmail(data) {
@@ -215,6 +218,7 @@ function isEmailValid(value) {
   return EMAIL_REGEXP.test(value);
 }
 
+
 /*=============== Validate phone ===============*/
 const PHONE_REGEXP = /^[\+]{0,1}380([0-9]{9})$/;
 
@@ -233,4 +237,28 @@ function validatePhone(data) {
 
 function isPhoneValid(value) {
   return PHONE_REGEXP.test(value);
+}
+
+
+/*=============== INPUT UPLOAD ===============*/
+const inputUpload = document.getElementById('input-file');
+const btnUpload = document.querySelector('.form__upload-btn');
+const textUpload = document.getElementById('upload-text');
+inputUpload.addEventListener('change', function() {
+  let file = this.files[0].name;
+  textUpload.textContent = `${file}`;
+});
+
+
+/*=============== Validate Upload File ===============*/
+function validatePhoto(data) {
+  if(inputUpload.value == '' || parseFloat(inputUpload.files[0].size/(1024*1024)) >= 5 || (inputUpload.files[0].type !== 'image/jpeg' || inputUpload.files[0].type !== 'image/jpg') ) {
+    const errorName = document.createElement('div');
+
+    btnUpload.classList.add('error-borderUpload');
+    textUpload.classList.add('error-border');
+    errorName.classList.add('error-upload');
+    errorName.innerHTML = `${data.fails.photo}`;
+    inputUpload.parentNode.append(errorName);
+  }
 }

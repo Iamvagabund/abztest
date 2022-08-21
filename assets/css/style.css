@@ -397,19 +397,41 @@ main {
   height: 0;
 }
 
-.btn-form {
+.disabled {
   color: var(--text-color-second);
   background-color: var(--gray-bg);
   margin-bottom: 100px;
+  cursor: auto;
 }
 
-.btn-form:hover {
+.disabled:hover {
   background-color: var(--gray-bg);
+}
+
+.btn-form {
+  margin-bottom: 100px;
 }
 
 /*=============== Error styles ===============*/
 .error-border {
   border: 2px solid var(--error-color);
+}
+
+.error-borderUpload {
+  border-top: 2px solid var(--error-color);
+  border-right: 0 solid var(--bg-color);
+  border-bottom: 2px solid var(--error-color);
+  border-left: 2px solid var(--error-color);
+}
+
+.error-upload {
+  position: absolute;
+  left: 16px;
+  bottom: -38px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--error-color);
 }
 
 .error-color {
