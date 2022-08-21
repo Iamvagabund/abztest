@@ -91,13 +91,13 @@ showMore.addEventListener('click', () => {
 let token = null;
 
 fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
-  .then(response => { return response.json(); })
+  .then(response => { return response.json() })
   .then(data => { token = data.token });
 
 
 /*=============== POSITION BLOCK ===============*/
 fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
-  .then(response => { return response.json(); })
+  .then(response => { return response.json() })
   .then(data => {
     if(data.success) {
       data.positions.forEach(({name, id}) => {
@@ -159,6 +159,17 @@ const postData = async (url, data) => {
   return await response.json();
 };
 
+
+/*=============== Show success block ===============*/
+const successBlock = document.querySelector('.success');
+function showSuccess() {
+  form.style.display = 'none';
+  successBlock.style.display = 'block';
+};
+
+
+
+/*=============== User registered ===============*/
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
@@ -171,6 +182,7 @@ form.addEventListener('submit', (event) => {
       userPage = 1;
       getUsers(userPage, userCount);
       showMore.removeAttribute('disabled');
+      showSuccess();
     } else {
       validateName();
       validateEmail(data);
@@ -180,6 +192,11 @@ form.addEventListener('submit', (event) => {
   }).catch(() => {
 
   }).finally(() => {
+    form.reset();
+    setTimeout(() => {
+      successBlock.style.display = 'none';
+      form.style.display = 'block';
+    }, 5000);
   });
 });
 

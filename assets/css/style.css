@@ -117,7 +117,6 @@ main {
   background-size: cover;
 }
 
-
 .hero::before {
   content: '';
   position: absolute;
@@ -139,7 +138,6 @@ main {
 .hero__content .btn {
   margin-top: 32px;
 }
-
 
 /*=============== SECTION GET ===============*/
 .get {
@@ -215,6 +213,10 @@ main {
 /*=============== SECTION POST ===============*/
 .post {
   margin-top: 140px;
+}
+
+.form {
+  position: relative;
 }
 
 .form .container{
@@ -304,7 +306,6 @@ main {
   color: #7E7E7E;
 }
 
-
 /*=============== RADIO BUTTONS ===============*/
 .form__radio {
   width: 380px;
@@ -359,7 +360,6 @@ main {
 .form__radio-block input:checked+label::before {
   background-image: url("../img/radio-active.png");
 }
-
 
 /*=============== UPLOAD FILES IN FORM ===============*/
 .form__upload {
@@ -443,6 +443,14 @@ main {
   color: var(--error-color);
 }
 
+/*=============== SUCCESS BLOCK ===============*/
+.success {
+  display: none;
+}
+
+.success__img img {
+  margin-bottom: 100px;
+}
 
 /*=============== @MEDIA BLOCK ===============*/
 @media (max-width: 1170px) {
