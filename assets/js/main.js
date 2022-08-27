@@ -96,6 +96,7 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
 
 
 /*=============== POSITION BLOCK ===============*/
+const getPosition = () => {
 fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
   .then(response => { return response.json() })
   .then(data => {
@@ -105,25 +106,47 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
         element.classList.add('form__radio-block');
 
         element.innerHTML = `
-            <input class="_req" id="radio-front" type="radio" name="position_id" value="${id}">
+            <input class="radio" type="radio" name="position_id" value="${id}">
             <label for="radio-front">${name}</label>
         `;
 
         document.querySelector('.form__radio').append(element);
       });
     }
+
+    // ADD Attribute 'Checked' for radio button
+    const checkbox = document.querySelectorAll('.radio');
+    function removeCheked() {
+      checkbox.forEach(item => {
+        item.removeAttribute("checked", "checked");
+      });
+    }
+
+    const addChecked = () => {
+      checkbox.forEach(items => {
+        items.addEventListener('click', (e) =>{
+          const target = e.target;
+          if (target === items) {
+            removeCheked();
+            target.setAttribute("checked", "checked");
+          }
+        });
+      });
+    };
+    addChecked();
+
+    /*=============== Validate positions ===============*/
+    function validatePosition() {
+      for(let i = 0; i < checkbox.length; i++) {
+        if(checkbox[i].hasAttribute('checked') === false) {
+          console.log('aaa');
+        }
+      }
+    }
+    validatePosition();
   });
-
-
-/*=============== ERROR BLOCK FORM ===============*/
-// const validateEmail = (email) => {
-
-//   return String(email)
-//     .toLowerCase()
-//     .match(
-//       /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/
-//     );
-// };
+}
+getPosition();
 
 
 /*=============== DISABLED/ENABLE BUTTON FORM ===============*/
@@ -168,13 +191,12 @@ function showSuccess() {
 };
 
 
-
 /*=============== User registered ===============*/
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
-
+  console.log(Object.fromEntries(formData.entries()));
   postData('https://frontend-test-assignment-api.abz.agency/api/v1/users', formData)
   .then(data => {
     if(data.success) {
@@ -189,10 +211,10 @@ form.addEventListener('submit', (event) => {
       validatePhone(data);
       validatePhoto(data);
     }
-  }).catch(() => {
-
-  }).finally(() => {
+  })
+  .finally(() => {
     form.reset();
+    textUpload.textContent = ``;
     setTimeout(() => {
       successBlock.style.display = 'none';
       form.style.display = 'block';
@@ -220,7 +242,7 @@ function validateName() {
 const EMAIL_REGEXP = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
 function validateEmail(data) {
   const email = document.getElementById('email');
-  if (!isEmailValid(email.value)) {
+  if (!isEmailValid(email.value.toLowerCase())) {
     const errorName = document.createElement('div');
 
     email.classList.add('error-border');
