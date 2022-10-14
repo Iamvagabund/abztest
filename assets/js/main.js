@@ -1,3 +1,5 @@
+import { formValidate } from '../utils/validate.js';
+
 /*=============== INPUT ANIMATION ===============*/
 const inputs = document.querySelectorAll('.form__input');
 
@@ -8,7 +10,7 @@ function focusFunc() {
 
 function blurFunc() {
   let parent = this.parentNode;
-  if(this.value == '') {
+  if (this.value == '') {
     parent.classList.remove('focus');
   }
 }
@@ -18,22 +20,21 @@ inputs.forEach(input => {
   input.addEventListener('blur', blurFunc);
 })
 
-
 /*=============== GET BLOCK ===============*/
 let userPage = 1;
 const userCount = 6;
 
-const getUsers = (page, count) => {
-  return fetch(`https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${page}&count=${count}`)
-  .then(response => { return response.json() })
-  .then(data => {
-    if(data.success) {
-      data.users.forEach(({photo, name, email, phone, position}) => {
-        const element = document.createElement('div');
+const getUsers = async (page, count) => {
+  return await fetch(`https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${page}&count=${count}`)
+    .then(response => { return response.json() })
+    .then(data => {
+      if (data.success) {
+        data.users.forEach(({ photo, name, email, phone, position }) => {
+          const element = document.createElement('div');
 
-        element.classList.add('card-block');
+          element.classList.add('card-block');
 
-        element.innerHTML = `
+          element.innerHTML = `
           <img class="card-block__img" src=${photo} alt="photo">
           <p class="card-block__name text-overflow" data-text="${name}">${name}</p>
           <div class="card-block__info">
@@ -43,27 +44,27 @@ const getUsers = (page, count) => {
           </div>
         `;
 
-        document.querySelector('.cards').append(element);
+          document.querySelector('.cards').append(element);
 
-        const checkEllips = () => {
-          const textOverflows = document.querySelectorAll('.text-overflow');
-          textOverflows.forEach(text => {
-              if (isEllipsisActive(text) ) {
-                  text.classList.add('cut');
+          const checkEllips = () => {
+            const textOverflows = document.querySelectorAll('.text-overflow');
+            textOverflows.forEach(text => {
+              if (isEllipsisActive(text)) {
+                text.classList.add('cut');
               }
-          })
-        }
+            })
+          }
 
-        function isEllipsisActive(e) {
-          return (e.offsetWidth < e.scrollWidth);
-        }
+          function isEllipsisActive(e) {
+            return (e.offsetWidth < e.scrollWidth);
+          }
 
-        checkEllips();
-      });
-    };
+          checkEllips();
+        });
+      };
 
-    return data;
-  });
+      return data;
+    });
 }
 
 getUsers(userPage, userCount);
@@ -72,14 +73,14 @@ getUsers(userPage, userCount);
 /*=============== BUTTON GET BLOCKS ===============*/
 const showMore = document.querySelector('.show-more');
 showMore.addEventListener('click', () => {
-  if(showMore.getAttribute('disabled')) { return }
+  if (showMore.getAttribute('disabled')) { return }
 
   showMore.setAttribute('disabled', 'disabled');
   userPage++;
 
   getUsers(userPage, userCount)
     .then(data => {
-      if(!data.success || data.users.length < userCount) {
+      if (!data.success || data.users.length < userCount) {
         showMore.setAttribute('hidden', 'hidden');
       }
     })
@@ -94,59 +95,55 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
   .then(response => { return response.json() })
   .then(data => { token = data.token });
 
-
 /*=============== POSITION BLOCK ===============*/
-const getPosition = () => {
-fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
-  .then(response => { return response.json() })
-  .then(data => {
-    if(data.success) {
-      data.positions.forEach(({name, id}) => {
-        const element = document.createElement('div');
-        element.classList.add('form__radio-block');
+const createElementPosition = (data) => {
+  data.positions.forEach(({ name, id }) => {
+    const element = document.createElement('div');
+    element.classList.add('form__radio-block');
 
-        element.innerHTML = `
-            <input class="radio" type="radio" name="position_id" value="${id}">
-            <label for="radio-front">${name}</label>
-        `;
+    element.innerHTML = `
+              <input class="radio _req _radio" type="radio" name="position_id" value="${id}">
+              <label for="radio-front">${name}</label>
+          `;
 
-        document.querySelector('.form__radio').append(element);
-      });
-    }
-
-    // ADD Attribute 'Checked' for radio button
-    const checkbox = document.querySelectorAll('.radio');
-    function removeCheked() {
-      checkbox.forEach(item => {
-        item.removeAttribute("checked", "checked");
-      });
-    }
-
-    const addChecked = () => {
-      checkbox.forEach(items => {
-        items.addEventListener('click', (e) =>{
-          const target = e.target;
-          if (target === items) {
-            removeCheked();
-            target.setAttribute("checked", "checked");
-          }
-        });
-      });
-    };
-    addChecked();
-
-    /*=============== Validate positions ===============*/
-    function validatePosition() {
-      for(let i = 0; i < checkbox.length; i++) {
-        if(checkbox[i].hasAttribute('checked') === false) {
-          console.log('aaa');
-        }
-      }
-    }
-    validatePosition();
+    document.querySelector('.form__radio').append(element);
   });
+  const checkbox = document.querySelectorAll('.radio');
+  const elementError = document.createElement('div');
+  elementError.classList.add('error-color', 'error-radio');
+  document.querySelector('.form__radio').append(elementError);
+
+  // ADD Attribute 'Checked' for radio button
+  function removeCheked() {
+    checkbox.forEach(item => {
+      item.removeAttribute("checked", "checked");
+    });
+  }
+  const addChecked = () => {
+    checkbox.forEach(items => {
+      items.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target === items) {
+          removeCheked();
+          target.setAttribute("checked", "checked");
+        }
+      });
+    });
+  };
+  addChecked();
 }
-getPosition();
+async function getPosition() {
+  return await fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
+    .then(response => { return response.json() })
+    .then(data => {
+      if (data.success) {
+        createElementPosition(data);
+      }
+    });
+}
+
+await getPosition();
+
 
 
 /*=============== DISABLED/ENABLE BUTTON FORM ===============*/
@@ -156,7 +153,7 @@ inputs.forEach(input => {
     const emailValue = document.getElementById('email').value;
     const phoneValue = document.getElementById('phone').value;
     const btnForm = document.querySelector('.btn-form');
-    if (nameValue.length < 2 || emailValue.length < 5 || phoneValue.length < 5) {
+    if (nameValue.length < 1 || emailValue.length < 5 || phoneValue.length < 5) {
       btnForm.setAttribute('disabled', true);
       btnForm.classList.add('disabled');
     } else {
@@ -196,108 +193,32 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
-  console.log(Object.fromEntries(formData.entries()));
   postData('https://frontend-test-assignment-api.abz.agency/api/v1/users', formData)
-  .then(data => {
-    if(data.success) {
-      document.querySelector('.cards').innerHTML = '';
-      userPage = 1;
-      getUsers(userPage, userCount);
-      showMore.removeAttribute('disabled');
-      showSuccess();
-    } else {
-      validateName();
-      validateEmail(data);
-      validatePhone(data);
-      validatePhoto(data);
-    }
-  })
-  .finally(() => {
-    form.reset();
-    textUpload.textContent = ``;
-    setTimeout(() => {
-      successBlock.style.display = 'none';
-      form.style.display = 'block';
-    }, 5000);
-  });
+    .then(data => {
+      const { fails } = data;
+      const error = formValidate({ form, fails, document });
+      if (error && data.success) {
+        document.querySelector('.cards').innerHTML = '';
+        userPage = 1;
+        getUsers(userPage, userCount);
+        showMore.removeAttribute('disabled');
+        showSuccess();
+        form.reset();
+      }
+    })
+    .finally(() => {
+      textUpload.textContent = ``;
+      setTimeout(() => {
+        successBlock.style.display = 'none';
+        form.style.display = 'block';
+      }, 7000);
+    });
 });
-
-
-/*=============== Validate name ===============*/
-function validateName() {
-  const name = document.getElementById('name');
-  if(name.value.length < 2 && name.value.length > 60) {
-    const errorName = document.createElement('div');
-
-    name.classList.add('error-border');
-    errorName.classList.add('error-color');
-    name.nextElementSibling.style.color = "var(--error-color)";
-    errorName.innerHTML = 'Username should contain 2-60 characters.';
-    name.parentNode.append(errorName);
-  }
-}
-
-
-/*=============== Validate email ===============*/
-const EMAIL_REGEXP = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
-function validateEmail(data) {
-  const email = document.getElementById('email');
-  if (!isEmailValid(email.value.toLowerCase())) {
-    const errorName = document.createElement('div');
-
-    email.classList.add('error-border');
-    errorName.classList.add('error-color');
-    email.nextElementSibling.style.color = "var(--error-color)";
-    errorName.innerHTML = `${data.fails.email}`;
-    email.parentNode.append(errorName);
-  }
-}
-
-function isEmailValid(value) {
-  return EMAIL_REGEXP.test(value);
-}
-
-
-/*=============== Validate phone ===============*/
-const PHONE_REGEXP = /^[\+]{0,1}380([0-9]{9})$/;
-
-function validatePhone(data) {
-  const phone = document.getElementById('phone');
-  if (!isPhoneValid(phone.value)) {
-    const errorName = document.createElement('div');
-
-    phone.classList.add('error-border');
-    errorName.classList.add('error-color');
-    phone.nextElementSibling.style.color = "var(--error-color)";
-    errorName.innerHTML = `${data.fails.phone}`;
-    phone.parentNode.append(errorName);
-  }
-}
-
-function isPhoneValid(value) {
-  return PHONE_REGEXP.test(value);
-}
-
 
 /*=============== INPUT UPLOAD ===============*/
 const inputUpload = document.getElementById('input-file');
-const btnUpload = document.querySelector('.form__upload-btn');
 const textUpload = document.getElementById('upload-text');
-inputUpload.addEventListener('change', function() {
+inputUpload.addEventListener('change', function () {
   let file = this.files[0].name;
-  textUpload.textContent = `${file}`;
+  textUpload.placeholder = `${file}`;
 });
-
-
-/*=============== Validate Upload File ===============*/
-function validatePhoto(data) {
-  if(inputUpload.value == '' || parseFloat(inputUpload.files[0].size/(1024*1024)) >= 5 || (inputUpload.files[0].type !== 'image/jpeg' || inputUpload.files[0].type !== 'image/jpg') ) {
-    const errorName = document.createElement('div');
-
-    btnUpload.classList.add('error-borderUpload');
-    textUpload.classList.add('error-border');
-    errorName.classList.add('error-upload');
-    errorName.innerHTML = `${data.fails.photo}`;
-    inputUpload.parentNode.append(errorName);
-  }
-}

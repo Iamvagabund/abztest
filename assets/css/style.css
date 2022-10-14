@@ -256,6 +256,10 @@ main {
   transition: .5s;
 }
 
+.input__container .label-phone {
+  top: 40%;
+}
+
 .input__container span {
   position: absolute;
   top: 0;
@@ -301,12 +305,12 @@ main {
 }
 
 .help-text {
-  position: absolute;
-  left: 16px;
-  bottom: -20px;
-  font-size: 12px;
-  line-height: 14px;
-  color: #7E7E7E;
+    margin-top: 4px;
+    text-align: left;
+    padding-left: 16px;
+    font-size: 12px;
+    line-height: 14px;
+    color: #7E7E7E;
 }
 
 /*=============== RADIO BUTTONS ===============*/
@@ -391,13 +395,20 @@ main {
   border: 1px solid rgba(208, 207, 207, 1);
 }
 
-.form__upload input[type=file] {
-  position: absolute;
+.input-file {
+  /* position: absolute;
   z-index: -1;
   opacity: 0;
   display: block;
   width: 0;
-  height: 0;
+  height: 0; */
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  width: 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .disabled {
@@ -435,6 +446,7 @@ main {
   font-size: 12px;
   line-height: 18px;
   color: var(--error-color);
+  display: none;
 }
 
 .error-color {
@@ -444,8 +456,28 @@ main {
   line-height: 14px;
   text-align: left;
   color: var(--error-color);
+  display: none;
 }
-
+.error-radio {
+  padding-left: 16px;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: left;
+  color: var(--error-color);
+  display: none;
+}
+.form__upload .error-color {
+  position: absolute;
+  left: 16px;
+  padding-left: 0;
+  bottom: -38px;
+  text-align: left;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--error-color);
+  display: none;
+}
 /*=============== SUCCESS BLOCK ===============*/
 .success {
   display: none;
