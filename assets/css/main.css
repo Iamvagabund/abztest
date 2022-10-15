@@ -88,7 +88,6 @@ button, input {
   padding: 4px 0;
   transition: 0.3s;
 }
-
 .btn:hover {
   background-color: #FFE302;
 }
@@ -114,7 +113,6 @@ main {
   background: url(../img/hero.jpeg) no-repeat;
   background-size: cover;
 }
-
 .hero::before {
   content: "";
   position: absolute;
@@ -122,18 +120,15 @@ main {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
-.hero__content {
+.hero .hero__content {
   width: 380px;
   z-index: 3;
 }
-
-.hero__content p {
+.hero .hero__content p {
   margin-top: 21px;
   color: #fff;
 }
-
-.hero__content .btn {
+.hero .hero__content .btn {
   margin-top: 32px;
 }
 
@@ -141,19 +136,16 @@ main {
 .get {
   margin-top: 140px;
 }
-
 .get h1 {
   color: var(--text-color);
 }
-
-.cards {
+.get .cards {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 50px;
 }
-
-.card-block {
+.get .cards .card-block {
   display: flex;
   flex-direction: column;
   width: 30%;
@@ -162,8 +154,7 @@ main {
   border-radius: 10px;
   margin-bottom: 29px;
 }
-
-.card-block__img {
+.get .cards .card-block__img {
   margin: 0 auto;
   width: 100%;
   height: 100%;
@@ -171,24 +162,23 @@ main {
   max-height: 70px;
   border-radius: 50%;
 }
-
-.card-block__name {
+.get .cards .card-block__name {
   margin-top: 20px;
 }
-
-.card-block__info {
+.get .cards .card-block__info {
   margin-top: 20px;
 }
-
-.text-overflow {
+.get .cards .card-block .text-overflow {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.get .btn-more {
+  width: 120px;
 }
 
 .cut {
   cursor: pointer;
 }
-
 .cut:after {
   content: attr(data-text);
   overflow: auto;
@@ -201,37 +191,28 @@ main {
   display: none;
   transition: all 0.15s ease-out;
 }
-
 .cut:hover:after {
   display: block;
-}
-
-.btn-more {
-  width: 120px;
 }
 
 /*=============== SECTION POST ===============*/
 .post {
   margin-top: 140px;
 }
-
-.form {
+.post .form {
   position: relative;
 }
-
-.form .container {
+.post .form .container {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
 }
-
-.input__container {
+.post .form .container .input__container {
   position: relative;
 }
-
-.form__input {
+.post .form .container .input__container .form__input {
   width: 380px;
   border: 1px solid #D0CFCF;
   background-color: transparent;
@@ -241,8 +222,7 @@ main {
   border-radius: 4px;
   transition: 0.3s;
 }
-
-.input__container label {
+.post .form .container .input__container label {
   position: absolute;
   top: 50%;
   left: 16px;
@@ -252,12 +232,10 @@ main {
   z-index: 100;
   transition: 0.5s;
 }
-
-.input__container .label-phone {
+.post .form .container .input__container .label-phone {
   top: 40%;
 }
-
-.input__container span {
+.post .form .container .input__container span {
   position: absolute;
   top: 0;
   left: 10px;
@@ -267,9 +245,7 @@ main {
   pointer-events: none;
   z-index: 99;
 }
-
-.input__container span::before,
-.input__container span::after {
+.post .form .container .input__container span::before, .post .form .container .input__container span::after {
   content: "";
   position: absolute;
   width: 10%;
@@ -280,23 +256,18 @@ main {
   transform: translateY(-50%);
   transition: 0.3s;
 }
-
-.input__container span::before {
+.post .form .container .input__container span::before {
   left: 50%;
 }
-
-.input__container span::after {
+.post .form .container .input__container span::after {
   right: 50%;
 }
-
-.input__container.focus label {
+.post .form .container .input__container.focus label {
   top: 0;
   left: 16px;
   transform: translateY(-50%);
 }
-
-.input__container.focus span::before,
-.input__container.focus span::after {
+.post .form .container .input__container.focus span::before, .post .form .container .input__container.focus span::after {
   width: 50%;
   opacity: 1;
 }
@@ -317,36 +288,36 @@ main {
   flex-direction: column;
   text-align: left;
 }
-
-.form__radio-block {
+.form__radio p {
+  margin-bottom: 11px;
+}
+.form__radio .form__radio-block {
   position: relative;
   display: flex;
   width: 100%;
   margin-bottom: 7px;
 }
-
-.form__radio p {
-  margin-bottom: 11px;
-}
-
-.form__radio-block input {
+.form__radio .form__radio-block input {
   position: absolute;
   width: 22px;
   height: 22px;
   opacity: 0;
+  /* styles for radio buttons in focus */
+  /* styles for radio buttons in checked */
 }
-
-.form__radio-block input + label {
+.form__radio .form__radio-block input:focus + label::before {
+  background-image: url(../img/radio-active.png);
+}
+.form__radio .form__radio-block input:checked + label::before {
+  background-image: url("../img/radio-active.png");
+}
+.form__radio .form__radio-block input + label {
   display: inline-flex;
   align-items: center;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  user-select: none;
+  /* creat in label before */
 }
-
-/* creat in label before */
-.form__radio-block input + label::before {
+.form__radio .form__radio-block input + label::before {
   content: "";
   display: inline-block;
   width: 20px;
@@ -358,24 +329,13 @@ main {
   border-radius: 50%;
 }
 
-/* styles for radio buttons in focus */
-.form__radio-block input:focus + label::before {
-  background-image: url(../img/radio-active.png);
-}
-
-/* styles for radio buttons in checked */
-.form__radio-block input:checked + label::before {
-  background-image: url("../img/radio-active.png");
-}
-
 /*=============== UPLOAD FILES IN FORM ===============*/
 .form__upload {
   position: relative;
   display: flex;
   width: 380px;
 }
-
-.form__upload-btn {
+.form__upload .form__upload-btn {
   position: relative;
   cursor: pointer;
   outline: none;
@@ -385,8 +345,7 @@ main {
   border: 1px solid rgba(0, 0, 0, 0.87);
   transition: background-color 0.2s;
 }
-
-.form__upload-text {
+.form__upload .form__upload-text {
   display: flex;
   width: 100%;
   color: rgb(126, 126, 126);
@@ -394,8 +353,7 @@ main {
   border-radius: 0 6px 6px 0;
   border: 1px solid rgb(208, 207, 207);
 }
-
-.input-file {
+.form__upload .input-file {
   position: absolute;
   cursor: pointer;
   opacity: 0;
@@ -411,7 +369,6 @@ main {
   margin-bottom: 100px;
   cursor: auto;
 }
-
 .disabled:hover {
   background-color: var(--gray-bg);
 }
@@ -507,7 +464,7 @@ main {
     width: 100%;
     height: 500px;
   }
-  .card-block {
+  .get .cards .card-block {
     width: 48.5%;
   }
 }
@@ -515,17 +472,20 @@ main {
   .container {
     padding: 0 16px;
   }
-  .hero__content {
+  .hero .hero__content {
     width: 100%;
     padding: 0 16px;
   }
-  .cards {
+  .get .cards {
     justify-content: center;
   }
-  .card-block {
+  .get .cards .card-block {
     width: 100%;
   }
-  .form__input, .form__radio, .form__upload {
+  .post .form .container .input__container .form__input {
+    width: 328px;
+  }
+  .form__radio, .form__upload {
     width: 328px;
   }
 }
@@ -536,11 +496,14 @@ main {
   .header .container {
     gap: 10px;
   }
-  .hero__content {
+  .hero .hero__content {
     width: 100%;
     padding: 0 16px;
   }
-  .form__input, .form__radio, .form__upload {
+  .post .form .container .input__container .form__input {
     width: 300px;
   }
-}
+  .form__radio, .form__upload {
+    width: 300px;
+  }
+}/*# sourceMappingURL=main.css.map */

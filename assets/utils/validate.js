@@ -20,7 +20,6 @@ export function formValidate({ form, fails, document }) {
     isError('_name', nameTest, formAddError, input, fails.name);
     isError('_email', emailTest, formAddError, input, fails.email);
     isError('_radio', radioTest, formAddError, input, fails.position_id);
-    // isError('form__upload-text', photoTest, formAddErrorUpload, input, fails.photo);
     isError('input-file', photoTest, formAddErrorUpload, input, fails.photo);
   }
   return error;

@@ -95,6 +95,7 @@ fetch('https://frontend-test-assignment-api.abz.agency/api/v1/token')
   .then(response => { return response.json() })
   .then(data => { token = data.token });
 
+
 /*=============== POSITION BLOCK ===============*/
 const createElementPosition = (data) => {
   data.positions.forEach(({ name, id }) => {
@@ -132,6 +133,7 @@ const createElementPosition = (data) => {
   };
   addChecked();
 }
+
 async function getPosition() {
   return await fetch('https://frontend-test-assignment-api.abz.agency/api/v1/positions')
     .then(response => { return response.json() })
@@ -143,7 +145,6 @@ async function getPosition() {
 }
 
 await getPosition();
-
 
 
 /*=============== DISABLED/ENABLE BUTTON FORM ===============*/
@@ -197,7 +198,7 @@ form.addEventListener('submit', (event) => {
     .then(data => {
       const { fails } = data;
       const error = formValidate({ form, fails, document });
-      if (error && data.success) {
+      if (!error && data.success) {
         document.querySelector('.cards').innerHTML = '';
         userPage = 1;
         getUsers(userPage, userCount);
@@ -214,6 +215,7 @@ form.addEventListener('submit', (event) => {
       }, 7000);
     });
 });
+
 
 /*=============== INPUT UPLOAD ===============*/
 const inputUpload = document.getElementById('input-file');

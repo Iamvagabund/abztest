@@ -1,0 +1,32 @@
+/*=============== HEADER ===============*/
+.header {
+  .container {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+
+    .header__logo img{
+      width: 100%;
+      max-width: 104px;
+      height: 26px;
+      vertical-align: middle;
+    }
+
+    .header__buttons {
+      display: flex;
+      gap: 10px;
+    }
+  }
+}
+
+.btn {
+  width: 100px;
+  border-radius: 80px;
+  background-color: var(--primary-color);
+  padding: 4px 0;
+  transition: .3s;
+  &:hover {
+    background-color: #FFE302;
+  }
+}
