@@ -109,29 +109,6 @@ const createElementPosition = (data) => {
 
     document.querySelector('.form__radio').append(element);
   });
-  const checkbox = document.querySelectorAll('.radio');
-  const elementError = document.createElement('div');
-  elementError.classList.add('error-color', 'error-radio');
-  document.querySelector('.form__radio').append(elementError);
-
-  // ADD Attribute 'Checked' for radio button
-  function removeCheked() {
-    checkbox.forEach(item => {
-      item.removeAttribute("checked", "checked");
-    });
-  }
-  const addChecked = () => {
-    checkbox.forEach(items => {
-      items.addEventListener('click', (e) => {
-        const target = e.target;
-        if (target === items) {
-          removeCheked();
-          target.setAttribute("checked", "checked");
-        }
-      });
-    });
-  };
-  addChecked();
 }
 
 async function getPosition() {
@@ -145,6 +122,29 @@ async function getPosition() {
 }
 
 await getPosition();
+
+// ADD Attribute 'Checked' for radio button
+const checkbox = document.querySelectorAll('.radio');
+const elementError = document.createElement('div');
+elementError.classList.add('error-block', 'error-radio');
+document.querySelector('.form__radio').append(elementError);
+function removeCheked() {
+  checkbox.forEach(item => {
+    item.removeAttribute("checked", "checked");
+  });
+}
+const addChecked = () => {
+  checkbox.forEach(items => {
+    items.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target === items) {
+        removeCheked();
+        target.setAttribute("checked", "checked");
+      }
+    });
+  });
+};
+addChecked();
 
 
 /*=============== DISABLED/ENABLE BUTTON FORM ===============*/
@@ -180,6 +180,15 @@ const postData = async (url, data) => {
   return await response.json();
 };
 
+/*=============== Preloader ===============*/
+const preloader = document.querySelector('.preloader');
+const showPreloader = () => {
+  preloader.style.display = 'block';
+}
+
+const removePreloader = () => {
+  preloader.style.display = 'none';
+}
 
 /*=============== Show success block ===============*/
 const successBlock = document.querySelector('.success');
@@ -188,31 +197,34 @@ function showSuccess() {
   successBlock.style.display = 'block';
 };
 
-
 /*=============== User registered ===============*/
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-
   const formData = new FormData(form);
   postData('https://frontend-test-assignment-api.abz.agency/api/v1/users', formData)
     .then(data => {
       const { fails } = data;
       const error = formValidate({ form, fails, document });
-      if (!error && data.success) {
+      showPreloader();
+
+      if (error === false && data.success) {
         document.querySelector('.cards').innerHTML = '';
         userPage = 1;
         getUsers(userPage, userCount);
         showMore.removeAttribute('disabled');
+        removePreloader();
         showSuccess();
         form.reset();
-      }
+        document.querySelector('.error-radio').style.display = 'none';
+        textUpload.placeholder = 'Upload your photo';
+      };
     })
     .finally(() => {
-      textUpload.textContent = ``;
+      removeCheked();
       setTimeout(() => {
         successBlock.style.display = 'none';
         form.style.display = 'block';
-      }, 7000);
+      }, 4000);
     });
 });
 

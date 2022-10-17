@@ -33,6 +33,10 @@ input {
   line-height: 26px;
 }
 
+button {
+  color: rgba(0, 0, 0, 0.87);
+}
+
 p {
   color: var(--text-color);
 }
@@ -115,6 +119,11 @@ main {
   background-size: cover;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    background-image: url(../img/hero-mobile.jpg);
+  }
+}
 .hero::before {
   content: "";
   position: absolute;
@@ -340,9 +349,9 @@ main {
   display: inline-flex;
   align-items: center;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 /* creat in label before */
@@ -443,7 +452,7 @@ main {
   display: none;
 }
 
-.error-color {
+.error-block {
   padding-left: 16px;
   margin-top: 4px;
   font-size: 12px;
@@ -463,7 +472,7 @@ main {
   display: none;
 }
 
-.form__upload .error-color {
+.form__upload .error-block {
   position: absolute;
   left: 16px;
   padding-left: 0;
@@ -473,6 +482,20 @@ main {
   line-height: 18px;
   color: var(--error-color);
   display: none;
+}
+
+/*=============== Preloader ===============*/
+.preloader {
+  display: none;
+  animation: 1s linear 0s normal none infinite running rot;
+}
+@keyframes rot {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*=============== SUCCESS BLOCK ===============*/

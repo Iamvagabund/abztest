@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Test for abz agency. Test assignment for front-end developer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/style.css">
   <title>TESTTASK</title>
 </head>
 
@@ -61,22 +62,22 @@
             <input id="name" class="form__input _req _name" required name="name" type="text">
             <label for="name">Your name</label>
             <span>Your name</span>
-            <div class="error-color"></div>
+            <div class="error-block"></div>
           </div>
 
           <div class="input__container">
             <input id="email" class="form__input _req _email" name="email" type="text">
-            <label for="">Email</label>
+            <label for="email">Email</label>
             <span>Email</span>
-            <div class="error-color"></div>
+            <div class="error-block"></div>
           </div>
 
           <div class="input__container">
             <input id="phone" class="form__input input__phone _req _phone" required name="phone" type="phone">
-            <label class="label-phone" for="">Phone</label>
+            <label class="label-phone" for="phone">Phone</label>
             <span>Phone</span>
             <div class="help-text">+38 (XXX) XXX - XX - XX</div>
-            <div class="error-color"></div>
+            <div class="error-block"></div>
           </div>
 
 
@@ -90,8 +91,9 @@
             <span class="form__upload-btn">Upload</span>
             <input id="upload-text" class="upload-input form__upload-text" type="text" placeholder="Upload your photo">
             <input id="input-file" class="upload-input input-file _req" type="file" name="photo">
-            <div class="error-color"></div>
+            <div class="error-block"></div>
           </label>
+          <img class="preloader" src="assets/img/preloader.svg" alt="preloader">
           <button class="btn btn-form disabled" type="submit" disabled>Sign me</button>
         </div>
       </form>

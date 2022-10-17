@@ -1,26 +1,25 @@
 function isError(nameOfInput, fieldTest, action, inputField, failField, error) {
   if (inputField.classList.contains(nameOfInput)) {
-    console.log(inputField);
     if (fieldTest(inputField)) {
       action(inputField, failField);
       return true;
     }
   }
-  return error;
+  return true;
 }
 
 export function formValidate({ form, fails, document }) {
-  let error = 0;
+  let error = false;
   let formReq = document.querySelectorAll('._req');
   formRemoveErrorUpload();
   formRemoveError();
   for (let index = 0; index < formReq.length; index++) {
     const input = formReq[index];
-    isError('_phone', phoneTest, formAddError, input, fails.phone);
-    isError('_name', nameTest, formAddError, input, fails.name);
-    isError('_email', emailTest, formAddError, input, fails.email);
-    isError('_radio', radioTest, formAddError, input, fails.position_id);
-    isError('input-file', photoTest, formAddErrorUpload, input, fails.photo);
+    isError('_phone', phoneTest, formAddError, input, fails?.phone);
+    isError('_name', nameTest, formAddError, input, fails?.name);
+    isError('_email', emailTest, formAddError, input, fails?.email);
+    isError('_radio', radioTest, formAddError, input, fails?.position_id);
+    isError('input-file', photoTest, formAddErrorUpload, input, fails?.photo);
   }
   return error;
 }
@@ -47,7 +46,7 @@ function formAddErrorUpload(input, error) {
 }
 //remove error class
 function formRemoveError() {
-  const errorField = document.querySelectorAll('.error-color');
+  const errorField = document.querySelectorAll('.error-block');
   errorField.forEach(error => {
     const firstParentChild = error.parentNode.firstElementChild;
     error.style.display = "none";
